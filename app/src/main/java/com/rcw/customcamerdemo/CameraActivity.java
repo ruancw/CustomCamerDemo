@@ -181,6 +181,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             setCameraParams(mPoint.x, mPoint.y);
             mCamera.startPreview();
             isPreview = true;
+            mCamera.cancelAutoFocus();//自动对焦。
         }
 
     }
@@ -228,7 +229,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             parameters.setFocusMode(android.hardware.Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);// 连续对焦模式
         }
 
-        mCamera.cancelAutoFocus();//自动对焦。
+        //mCamera.cancelAutoFocus();//自动对焦。
         // 设置PreviewDisplay的方向，效果就是将捕获的画面旋转多少度显示
         mCamera.setDisplayOrientation(90);
         mCamera.setParameters(parameters);
@@ -351,27 +352,5 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
     }
 
-    private AlertDialog.Builder builder;
-    private AlertDialog dialog;
-
-    /**
-     * 长按弹出对话框
-     */
-    private void showSelectDialog(Bitmap bitmap) {
-        View dialogView = View.inflate(this, R.layout.student_big_photo, null);
-        ImageView ivPreview = (ImageView) dialogView.findViewById(R.id.iv_preview);
-
-        ivPreview.setImageBitmap(bitmap);
-        //tvTitle.setText(stuNum);
-        //Picasso加载本地图片
-        //BaseImageUtils.setImage(this, "file://" + data, ivPreview);
-        builder = new AlertDialog.Builder(this);
-        dialog = builder.create();
-        dialog.setView(dialogView);
-        dialog.setCanceledOnTouchOutside(false);//点击屏幕不消失
-        dialog.show();
-        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
-        dialog.getWindow().setAttributes(params);
-    }
 
 }
